@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascot Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .mascot-part-container svg {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+        .btn-control {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-control:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .btn-control:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        .main-container {
+             background: white;
+        }
+        .mascot-bg-display {
+            background-image: linear-gradient(135deg, #e0f2fe, #d1fae5);
+        }
+        .control-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .control-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="main-container w-full max-w-5xl rounded-3xl shadow-2xl p-6 md:p-8 flex flex-col md:flex-row gap-8 md:gap-12">
+        
+        <!-- Left Side: Mascot Display -->
+        <div class="w-full md:w-1/2 flex flex-col items-center justify-center">
+            <div id="mascot-bg" class="mascot-bg-display w-full max-w-md rounded-3xl p-4 flex items-center justify-center aspect-square shadow-inner">
+                <div id="mascot-display" class="relative w-full h-full max-w-xs max-h-xs">
+                    <!-- The mascot parts will be injected here by JavaScript -->
+                    <div id="legs-container" class="mascot-part-container absolute inset-0"></div>
+                    <div id="body-container" class="mascot-part-container absolute inset-0"></div>
+                    <div id="hands-container" class="mascot-part-container absolute inset-0"></div>
+                    <div id="face-container" class="mascot-part-container absolute inset-0"></div>
+                    <div id="eyes-container" class="mascot-part-container absolute inset-0"></div>
+                    <div id="mouth-container" class="mascot-part-container absolute inset-0"></div>
+                    <div id="accessory-container" class="mascot-part-container absolute inset-0"></div>
+                </div>
+            </div>
+             <!-- Download Button -->
+            <div class="mt-6 w-full max-w-md">
+                <button id="download-btn" class="w-full btn-control bg-gradient-to-br from-green-500 to-green-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+                    Download Mascot
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Side: Customization Controls -->
+        <div class="w-full md:w-1/2">
+            <div class="text-center md:text-left mb-6">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Create Your Mascot</h1>
+                <p class="text-gray-500 mt-2 text-lg">Mix and match to build a unique friend!</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Control Row 1 -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="control-card p-4 rounded-2xl text-center">
+                        <label class="font-semibold text-lg text-gray-700 mb-3 block">Body</label>
+                        <div class="flex justify-center items-center space-x-3">
+                            <button id="prev-body" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                            <button id="next-body" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                        </div>
+                    </div>
+                    <div class="control-card p-4 rounded-2xl text-center">
+                        <label class="font-semibold text-lg text-gray-700 mb-3 block">Face</label>
+                        <div class="flex justify-center items-center space-x-3">
+                            <button id="prev-face" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                            <button id="next-face" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Control Row 2 -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="control-card p-4 rounded-2xl text-center">
+                        <label class="font-semibold text-lg text-gray-700 mb-3 block">Eyes</label>
+                        <div class="flex justify-center items-center space-x-3">
+                            <button id="prev-eyes" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                            <button id="next-eyes" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                        </div>
+                    </div>
+                     <div class="control-card p-4 rounded-2xl text-center">
+                        <label class="font-semibold text-lg text-gray-700 mb-3 block">Mouth</label>
+                        <div class="flex justify-center items-center space-x-3">
+                            <button id="prev-mouth" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                            <button id="next-mouth" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Control Row 3 -->
+                <div class="grid grid-cols-2 gap-4">
+                     <div class="control-card p-4 rounded-2xl text-center">
+                        <label class="font-semibold text-lg text-gray-700 mb-3 block">Hands</label>
+                        <div class="flex justify-center items-center space-x-3">
+                            <button id="prev-hands" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                            <button id="next-hands" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                        </div>
+                    </div>
+                    <div class="control-card p-4 rounded-2xl text-center">
+                        <label class="font-semibold text-lg text-gray-700 mb-3 block">Legs</label>
+                        <div class="flex justify-center items-center space-x-3">
+                            <button id="prev-legs" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                            <button id="next-legs" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Control Row 4 -->
+                <div class="control-card p-4 rounded-2xl text-center">
+                    <label class="font-semibold text-lg text-gray-700 mb-3 block">Accessories</label>
+                    <div class="flex justify-center items-center space-x-3">
+                        <button id="prev-accessory" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                        <button id="next-accessory" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    </div>
+                </div>
+                 <!-- Control Row 5 -->
+                <div class="control-card p-4 rounded-2xl text-center">
+                    <label class="font-semibold text-lg text-gray-700 mb-3 block">Background Color</label>
+                    <div class="flex justify-center items-center space-x-3">
+                        <button id="prev-bg" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                        <button id="next-bg" class="btn-control bg-white shadow-md rounded-full p-2 text-gray-600 hover:bg-gray-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- SVG ASSETS ---
+            
+            const bodies = [
+                // Fluffy Blue Body
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M158 102c0 31-26 57-58 57s-58-26-58-57 26-57 58-57 58 25 58 57z" fill="#4A90E2"/><path d="M118 104c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11zm-36 0c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11z" fill="#7CB8F7"/></svg>`,
+                // Fluffy Purple Body
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M158 102c0 31-26 57-58 57s-58-26-58-57 26-57 58-57 58 25 58 57z" fill="#8E44AD"/><path d="M118 104c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11zm-36 0c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11z" fill="#C39BD3"/></svg>`,
+                // Fluffy Green Body
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M158 102c0 31-26 57-58 57s-58-26-58-57 26-57 58-57 58 25 58 57z" fill="#2ECC71"/><path d="M118 104c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11zm-36 0c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11z" fill="#82E0AA"/></svg>`
+            ];
+
+            const faces = [
+                // Face 1: Peach with Ears
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M138 78c0-10-8-18-18-18h-40c-10 0-18 8-18 18v29c0 10 8 18 18 18h40c10 0 18-8 18-18v-29z"/><path d="M58 88a10 10 0 0 1 10-10 10 10 0 0 1 10 10v10a10 10 0 0 1-10 10 10 10 0 0 1-10-10v-10zm84 0a10 10 0 0 1 10-10 10 10 0 0 1 10 10v10a10 10 0 0 1-10 10 10 10 0 0 1-10-10v-10z"/></g></svg>`,
+                // Face 2: Lighter with smaller ears
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FFF9E9"><path d="M138 78c0-10-8-18-18-18h-40c-10 0-18 8-18 18v29c0 10 8 18 18 18h40c10 0 18-8 18-18v-29z"/><path d="M62 82a6 6 0 0 1 6-6 6 6 0 0 1 6 6v8a6 6 0 0 1-6 6 6 6 0 0 1-6-6v-8zm76 0a6 6 0 0 1 6-6 6 6 0 0 1 6 6v8a6 6 0 0 1-6 6 6 6 0 0 1-6-6v-8z"/></g></svg>`,
+                 // Face 3: Darker, rounder ears
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#E5C2A0"><path d="M138 78c0-10-8-18-18-18h-40c-10 0-18 8-18 18v29c0 10 8 18 18 18h40c10 0 18-8 18-18v-29z"/><circle cx="68" cy="90" r="10"/><circle cx="132" cy="90" r="10"/></g></svg>`
+            ];
+             const hands = [
+                // Hands 1: Thumbs up
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M60 105 A 10 10 0 0 1 70 115 L 70 130 A 10 10 0 0 1 60 140 L 50 140 A 10 10 0 0 1 40 130 L 40 125 A 10 10 0 0 1 50 115 Z"/><path d="M140 115 A 10 10 0 0 0 130 105 L 130 125 A 10 10 0 0 0 140 135 L 150 135 A 10 10 0 0 0 160 125 L 160 120 A 10 10 0 0 0 150 110 Z"/></g></svg>`,
+                // Hands 2: Waving
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M60,115 C 40,110 40,90 55,85 S 70,95 60,115z" /><path d="M140 115 A 10 10 0 0 0 130 105 L 130 125 A 10 10 0 0 0 140 135 L 150 135 A 10 10 0 0 0 160 125 L 160 120 A 10 10 0 0 0 150 110 Z"/></g></svg>`,
+                // Hands 3: Default down
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M53 118l-18 8-4-10 17-7zM147 118l18 8 4-10-17-7z"></path></g></svg>`,
+            ];
+
+            const legs = [
+                // Legs 1: Standing
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M80 155 l -5 15 h 10 z M120 155 l 5 15 h -10 z" /></g></svg>`,
+                // Legs 2: Walking
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M80 162l-8 15-9-6 7-14zM120 152l15 8 6-9-14-7z"></path></g></svg>`,
+                // Legs 3: Sitting
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M80 155 h -15 l 0 10 h 15 z M120 155 h 15 l 0 10 h -15 z" /></g></svg>`,
+            ];
+
+            const eyes = [
+                // Eyes 1: Default looking up
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><circle cx="90" cy="90" r="6" fill="#2c3e50"/><circle cx="110" cy="90" r="6" fill="#2c3e50"/><path d="M85 82c2-3 7-3 9 0M105 82c2-3 7-3 9 0" stroke="#2c3e50" stroke-width="2" fill="none"/></svg>`,
+                // Eyes 2: Happy
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M85 90c5-5 10-5 15 0 M100 90c5-5 10-5 15 0" stroke="#2c3e50" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+                // Eyes 3: Crossed eyes (Goofy!)
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><circle cx="95" cy="95" r="6" fill="#2c3e50"/><circle cx="105" cy="95" r="6" fill="#2c3e50"/></svg>`,
+                // Eyes 4: Spiral eyes (Goofy!)
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g stroke="#2c3e50" stroke-width="2" fill="none"><path d="M 90 90 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/><path d="M 110 90 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/></g></svg>`
+            ];
+
+            const mouths = [
+                // Mouth 1: Small 'o'
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><circle cx="100" cy="110" r="3" fill="#2c3e50"/></svg>`,
+                // Mouth 2: Slight smile
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M95 110 c5 5 10 5 15 0" stroke="#2c3e50" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+                // Mouth 3: Tongue out (Goofy!)
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M95 110 h10 v5 a 5 5 0 0 0 10 0 v-5 h-20" fill="#E74C3C"/><path d="M95 110 h10" stroke="#2c3e50" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+                // Mouth 4: Toothy Grin (Goofy!)
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M90 108 a 10 10 0 0 1 20 0 v5 H 90 Z" fill="white" stroke="#2c3e50" stroke-width="2"/><path d="M94 108 v5 M98 108 v5 M102 108 v5 M106 108 v5" stroke="#2c3e50" stroke-width="1"/></svg>`
+            ];
+
+            const accessories = [
+                 // Accessory 0: None
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"></svg>`,
+                // Accessory 1: Glasses and Earring
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g stroke="#2c3e50" stroke-width="2" fill="none"><path d="M82 90a10 10 0 1 1 20 0 10 10 0 1 1-20 0"/><path d="M102 90a10 10 0 1 1 20 0 10 10 0 1 1-20 0"/><path d="M102 90h-4M70 85h12"/></g><g fill="#FFD700" stroke="black" stroke-width="1.5"><circle cx="140" cy="100" r="8" fill-opacity="0.8"/><path d="M140 92 v-5" stroke="black" stroke-width="1.5"/></g></svg>`,
+                // Accessory 2: Propeller Hat (Goofy!)
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g><path d="M90 60 a 10 10 0 0 1 20 0 v-5 H 90 Z" fill="#F39C12"/><path d="M100 55 v -10" stroke="#2c3e50" stroke-width="2"/><path d="M85 45 L 115 45" stroke="#E74C3C" stroke-width="4" stroke-linecap="round"/><path d="M100 30 L 100 60" stroke="#3498DB" stroke-width="4" stroke-linecap="round" transform="rotate(45 100 45)"/></g></svg>`,
+                // Accessory 3: Just Glasses
+                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g stroke="#2c3e50" stroke-width="2" fill="none"><circle cx="92" cy="90" r="10"/><circle cx="112" cy="90" r="10"/><path d="M102 90h-4M70 85h12"/></g></svg>`
+            ];
+
+            const bgColors = [
+                'linear-gradient(135deg, #e0f2fe, #d1fae5)',
+                'linear-gradient(135deg, #fef3c7, #fee2e2)',
+                'linear-gradient(135deg, #f3e8ff, #dbeafe)',
+                'linear-gradient(135deg, #fef9c3, #fde68a)',
+                'linear-gradient(135deg, #e5e7eb, #d1d5db)',
+                '#000000',
+                'transparent'
+            ];
+            
+            // --- DOM ELEMENT REFERENCES ---
+            const faceContainer = document.getElementById('face-container');
+            const eyesContainer = document.getElementById('eyes-container');
+            const mouthContainer = document.getElementById('mouth-container');
+            const bodyContainer = document.getElementById('body-container');
+            const handsContainer = document.getElementById('hands-container');
+            const legsContainer = document.getElementById('legs-container');
+            const accessoryContainer = document.getElementById('accessory-container');
+            const mascotBg = document.getElementById('mascot-bg');
+
+            // --- STATE MANAGEMENT ---
+            let currentFaceIndex = 0;
+            let currentEyesIndex = 0;
+            let currentMouthIndex = 0;
+            let currentBodyIndex = 0;
+            let currentHandsIndex = 0;
+            let currentLegsIndex = 0;
+            let currentAccessoryIndex = 0;
+            let currentBgIndex = 0;
+            
+            // --- FUNCTIONS ---
+
+            function renderMascot() {
+                faceContainer.innerHTML = faces[currentFaceIndex];
+                eyesContainer.innerHTML = eyes[currentEyesIndex];
+                mouthContainer.innerHTML = mouths[currentMouthIndex];
+                bodyContainer.innerHTML = bodies[currentBodyIndex];
+                handsContainer.innerHTML = hands[currentHandsIndex];
+                legsContainer.innerHTML = legs[currentLegsIndex];
+                accessoryContainer.innerHTML = accessories[currentAccessoryIndex];
+            }
+
+            function renderBackground() {
+                const currentBg = bgColors[currentBgIndex];
+                if (currentBg.startsWith('linear-gradient')) {
+                    mascotBg.style.backgroundImage = currentBg;
+                    mascotBg.style.backgroundColor = ''; // Clear solid color
+                } else {
+                    mascotBg.style.backgroundImage = 'none'; // Clear gradient
+                    mascotBg.style.backgroundColor = currentBg;
+                }
+            }
+
+            function changePart(partName, direction) {
+                let index, maxIndex;
+                
+                switch(partName) {
+                    case 'face': index = currentFaceIndex; maxIndex = faces.length; break;
+                    case 'eyes': index = currentEyesIndex; maxIndex = eyes.length; break;
+                    case 'mouth': index = currentMouthIndex; maxIndex = mouths.length; break;
+                    case 'body': index = currentBodyIndex; maxIndex = bodies.length; break;
+                    case 'hands': index = currentHandsIndex; maxIndex = hands.length; break;
+                    case 'legs': index = currentLegsIndex; maxIndex = legs.length; break;
+                    case 'accessory': index = currentAccessoryIndex; maxIndex = accessories.length; break;
+                }
+                
+                index += direction;
+
+                if (index < 0) {
+                    index = maxIndex - 1;
+                } else if (index >= maxIndex) {
+                    index = 0;
+                }
+
+                switch(partName) {
+                    case 'face': currentFaceIndex = index; break;
+                    case 'eyes': currentEyesIndex = index; break;
+                    case 'mouth': currentMouthIndex = index; break;
+                    case 'body': currentBodyIndex = index; break;
+                    case 'hands': currentHandsIndex = index; break;
+                    case 'legs': currentLegsIndex = index; break;
+                    case 'accessory': currentAccessoryIndex = index; break;
+                }
+
+                renderMascot();
+            }
+
+            function changeBackground(direction) {
+                currentBgIndex += direction;
+                if (currentBgIndex < 0) {
+                    currentBgIndex = bgColors.length - 1;
+                } else if (currentBgIndex >= bgColors.length) {
+                    currentBgIndex = 0;
+                }
+                renderBackground();
+            }
+
+            function downloadMascot() {
+                const node = document.getElementById('mascot-bg');
+                html2canvas(node, {
+                     // Set the background to be transparent to capture the gradient properly
+                    backgroundColor: null,
+                    scale: 3 
+                }).then(canvas => {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.download = 'my-mascot.png';
+                    link.href = dataUrl;
+                    link.click();
+                }).catch(error => {
+                    console.error('Oops, something went wrong!', error);
+                });
+            }
+
+            // --- EVENT LISTENERS ---
+            document.getElementById('next-face').addEventListener('click', () => changePart('face', 1));
+            document.getElementById('prev-face').addEventListener('click', () => changePart('face', -1));
+
+            document.getElementById('next-eyes').addEventListener('click', () => changePart('eyes', 1));
+            document.getElementById('prev-eyes').addEventListener('click', () => changePart('eyes', -1));
+
+            document.getElementById('next-mouth').addEventListener('click', () => changePart('mouth', 1));
+            document.getElementById('prev-mouth').addEventListener('click', () => changePart('mouth', -1));
+
+            document.getElementById('next-body').addEventListener('click', () => changePart('body', 1));
+            document.getElementById('prev-body').addEventListener('click', () => changePart('body', -1));
+
+            document.getElementById('next-hands').addEventListener('click', () => changePart('hands', 1));
+            document.getElementById('prev-hands').addEventListener('click', () => changePart('hands', -1));
+
+            document.getElementById('next-legs').addEventListener('click', () => changePart('legs', 1));
+            document.getElementById('prev-legs').addEventListener('click', () => changePart('legs', -1));
+
+            document.getElementById('next-accessory').addEventListener('click', () => changePart('accessory', 1));
+            document.getElementById('prev-accessory').addEventListener('click', () => changePart('accessory', -1));
+
+            document.getElementById('next-bg').addEventListener('click', () => changeBackground(1));
+            document.getElementById('prev-bg').addEventListener('click', () => changeBackground(-1));
+
+            document.getElementById('download-btn').addEventListener('click', downloadMascot);
+
+            // --- INITIAL RENDER ---
+            renderMascot();
+            renderBackground();
+        });
+    </script>
+</body>
+</html>
+
+
+

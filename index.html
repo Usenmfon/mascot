@@ -289,7 +289,6 @@
             function downloadMascot() {
                 const node = document.getElementById('mascot-bg');
                 html2canvas(node, {
-                     // Set the background to be transparent to capture the gradient properly
                     backgroundColor: null,
                     scale: 3 
                 }).then(canvas => {

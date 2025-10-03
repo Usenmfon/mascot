@@ -55,7 +55,8 @@
                     <!-- The mascot parts will be injected here by JavaScript -->
                     <div id="legs-container" class="mascot-part-container absolute inset-0"></div>
                     <div id="body-container" class="mascot-part-container absolute inset-0"></div>
-                    <div id="hands-container" class="mascot-part-container absolute inset-0"></div>
+                    <div id="left-hand-container" class="mascot-part-container absolute inset-0"></div>
+                    <div id="right-hand-container" class="mascot-part-container absolute inset-0"></div>
                     <div id="face-container" class="mascot-part-container absolute inset-0"></div>
                     <div id="eyes-container" class="mascot-part-container absolute inset-0"></div>
                     <div id="mouth-container" class="mascot-part-container absolute inset-0"></div>
@@ -155,37 +156,34 @@
             
             const bodies = [
                 // Fluffy Blue Body
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M158 102c0 31-26 57-58 57s-58-26-58-57 26-57 58-57 58 25 58 57z" fill="#4A90E2"/><path d="M118 104c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11zm-36 0c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11z" fill="#7CB8F7"/></svg>`,
+                `<img src="./images/Body.png" />`,
                 // Fluffy Purple Body
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M158 102c0 31-26 57-58 57s-58-26-58-57 26-57 58-57 58 25 58 57z" fill="#8E44AD"/><path d="M118 104c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11zm-36 0c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11z" fill="#C39BD3"/></svg>`,
+                `<svg viewBox="0 0 500 500" width="100%" height="100%"><path d="M158 102c0 31-26 57-58 57s-58-26-58-57 26-57 58-57 58 25 58 57z" fill="#8E44AD"/><path d="M118 104c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11zm-36 0c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11z" fill="#C39BD3"/></svg>`,
                 // Fluffy Green Body
                 `<svg viewBox="0 0 200 200" width="100%" height="100%"><path d="M158 102c0 31-26 57-58 57s-58-26-58-57 26-57 58-57 58 25 58 57z" fill="#2ECC71"/><path d="M118 104c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11zm-36 0c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11z" fill="#82E0AA"/></svg>`
             ];
 
             const faces = [
-                // Face 1: Peach with Ears
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M138 78c0-10-8-18-18-18h-40c-10 0-18 8-18 18v29c0 10 8 18 18 18h40c10 0 18-8 18-18v-29z"/><path d="M58 88a10 10 0 0 1 10-10 10 10 0 0 1 10 10v10a10 10 0 0 1-10 10 10 10 0 0 1-10-10v-10zm84 0a10 10 0 0 1 10-10 10 10 0 0 1 10 10v10a10 10 0 0 1-10 10 10 10 0 0 1-10-10v-10z"/></g></svg>`,
-                // Face 2: Lighter with smaller ears
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FFF9E9"><path d="M138 78c0-10-8-18-18-18h-40c-10 0-18 8-18 18v29c0 10 8 18 18 18h40c10 0 18-8 18-18v-29z"/><path d="M62 82a6 6 0 0 1 6-6 6 6 0 0 1 6 6v8a6 6 0 0 1-6 6 6 6 0 0 1-6-6v-8zm76 0a6 6 0 0 1 6-6 6 6 0 0 1 6 6v8a6 6 0 0 1-6 6 6 6 0 0 1-6-6v-8z"/></g></svg>`,
-                 // Face 3: Darker, rounder ears
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#E5C2A0"><path d="M138 78c0-10-8-18-18-18h-40c-10 0-18 8-18 18v29c0 10 8 18 18 18h40c10 0 18-8 18-18v-29z"/><circle cx="68" cy="90" r="10"/><circle cx="132" cy="90" r="10"/></g></svg>`
+                `<img src="./images/Face1.png" />`,
+                `<img src="./images/Face2.png" />`,
+                `<img src="./images/Face4.png" />`,
+                `<img src="./images/Face5.png" />`,
+                `<img src="./images/Face6.png" />`,
+                `<img src="./images/Face7.png" />`,
             ];
              const hands = [
-                // Hands 1: Thumbs up
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M60 105 A 10 10 0 0 1 70 115 L 70 130 A 10 10 0 0 1 60 140 L 50 140 A 10 10 0 0 1 40 130 L 40 125 A 10 10 0 0 1 50 115 Z"/><path d="M140 115 A 10 10 0 0 0 130 105 L 130 125 A 10 10 0 0 0 140 135 L 150 135 A 10 10 0 0 0 160 125 L 160 120 A 10 10 0 0 0 150 110 Z"/></g></svg>`,
-                // Hands 2: Waving
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M60,115 C 40,110 40,90 55,85 S 70,95 60,115z" /><path d="M140 115 A 10 10 0 0 0 130 105 L 130 125 A 10 10 0 0 0 140 135 L 150 135 A 10 10 0 0 0 160 125 L 160 120 A 10 10 0 0 0 150 110 Z"/></g></svg>`,
-                // Hands 3: Default down
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M53 118l-18 8-4-10 17-7zM147 118l18 8 4-10-17-7z"></path></g></svg>`,
-            ];
+                  { left: `<img src="./images/L1.png" />`, right: `<img src="./images/R1.png" />` },
+                  { left: `<img src="./images/L2.png" />`, right: `<img src="./images/R2.png" />` },
+                  { left: `<img src="./images/L3.png" />`, right: `<img src="./images/R3.png" />` },
+                ];
 
             const legs = [
-                // Legs 1: Standing
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M80 155 l -5 15 h 10 z M120 155 l 5 15 h -10 z" /></g></svg>`,
-                // Legs 2: Walking
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M80 162l-8 15-9-6 7-14zM120 152l15 8 6-9-14-7z"></path></g></svg>`,
-                // Legs 3: Sitting
-                `<svg viewBox="0 0 200 200" width="100%" height="100%"><g fill="#FBE0C3"><path d="M80 155 h -15 l 0 10 h 15 z M120 155 h 15 l 0 10 h -15 z" /></g></svg>`,
+                `<img src="./images/Legs1.png" />`,
+                `<img src="./images/Legs2.png" />`,
+                `<img src="./images/Legs3.png" />`,
+                `<img src="./images/Legs4.png" />`,
+                `<img src="./images/Legs5.png" />`,
+                `<img src="./images/Legs6.png" />`,
             ];
 
             const eyes = [
@@ -236,7 +234,8 @@
             const eyesContainer = document.getElementById('eyes-container');
             const mouthContainer = document.getElementById('mouth-container');
             const bodyContainer = document.getElementById('body-container');
-            const handsContainer = document.getElementById('hands-container');
+            const leftHandContainer = document.getElementById('left-hand-container');
+            const rightHandContainer = document.getElementById('right-hand-container');
             const legsContainer = document.getElementById('legs-container');
             const accessoryContainer = document.getElementById('accessory-container');
             const mascotBg = document.getElementById('mascot-bg');
@@ -258,7 +257,8 @@
                 eyesContainer.innerHTML = eyes[currentEyesIndex];
                 mouthContainer.innerHTML = mouths[currentMouthIndex];
                 bodyContainer.innerHTML = bodies[currentBodyIndex];
-                handsContainer.innerHTML = hands[currentHandsIndex];
+                leftHandContainer.innerHTML = hands[currentHandsIndex].left;
+                rightHandContainer.innerHTML = hands[currentHandsIndex].right;
                 legsContainer.innerHTML = legs[currentLegsIndex];
                 accessoryContainer.innerHTML = accessories[currentAccessoryIndex];
             }

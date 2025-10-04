@@ -47,7 +47,7 @@
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="w-full flex items-center justify-center min-h-screen p-4">
     <div class="main-container w-full max-w-5xl md:rounded-3xl shadow-2xl">
         <div class="text-center mt-3">
             <h1 class="text-xl md:text-5xl font-bold text-gray-800">Customize Your Brevis Zkat</h1>
@@ -198,7 +198,7 @@
             const bgColors = [
                 '#ffffff',
                 '#000000',
-                'transparent'
+                'transparent',
             ];
             
             // --- DOM ELEMENT REFERENCES ---
@@ -236,6 +236,9 @@
                 const currentBg = bgColors[currentBgIndex];
                 if (currentBg.startsWith('linear-gradient')) {
                     mascotBg.style.backgroundImage = currentBg;
+                    mascotBg.style.backgroundColor = '';
+                }else if(currentBg == 'transparent') {
+                    mascotBg.style.backgroundImage = 'url("./images/background/transparent.jpg")';
                     mascotBg.style.backgroundColor = '';
                 } else {
                     mascotBg.style.backgroundImage = 'none';
@@ -287,6 +290,13 @@
 
             function downloadMascot() {
                 const node = document.getElementById('mascot-bg');
+                 const currentBg = bgColors[currentBgIndex];
+
+                 if (currentBg === 'transparent') {
+                    mascotBg.style.backgroundImage = 'none';
+                    mascotBg.style.backgroundColor = 'transparent';
+                }
+
                 html2canvas(node, {
                     backgroundColor: null,
                     scale: 3 
